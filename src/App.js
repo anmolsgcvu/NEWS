@@ -1,25 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import React, { Component } from 'react'
+import Nabar from './components/Nabar';
+import News from './components/News';
+import LoadingBar from 'react-top-loading-bar';
 
-export default App;
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
+export default class App extends Component {
+  page = 5;
+  state = {
+    pa:0
+  }
+  setp =(progress) =>{
+    this.setState({progress: progress})
+  }
+  render() {
+    return (
+      <div>
+        <Router>
+        <Nabar/>
+        <LoadingBar
+        color='#f11946'
+        progress={this.state.progress}
+      />
+        <Switch>
+        <Route exact path='/'><News setp={this.setp}  key="general" page={this.page} category="general" country="in"/></Route>
+          <Route exact path="/business"><News setp={this.setp}  key="business" page={this.page} category="business" country="in"/></Route>
+          <Route exact path="/entertainment"><News setp={this.setp}  key="entertainment" page={this.page} category="entertainment" country="in"/></Route>
+          <Route exact path='/general'><News setp={this.setp}  key="general" page={this.page} category="general" country="in"/></Route>
+          <Route exact path='/health'><News setp={this.setp}  key="health" page={this.page} category="health" country="in"/></Route>
+          <Route exact path='/science'><News setp={this.setp}  key="science" page={this.page} category="science" country="in"/></Route>
+          <Route exact path='/sports'><News setp={this.setp}  key="sports" page={this.page} category="sports" country="in"/></Route>
+          <Route exact path='/technology'><News setp={this.setp}  key="technology" page={this.page} category="technology" country="in"/></Route>
+        </Switch>
+        </Router>
+      </div>
+    )
+  }
+}
